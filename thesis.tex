@@ -1,0 +1,326 @@
+\documentclass{article}
+
+% Packages defined here
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{tikz-cd}
+\usepackage{amsthm}
+
+% pdf data defined here
+\title{Title}
+\author{Author} \date{ }
+% Abbreviations defined here
+\newcommand{\spec}[1]{\operatorname{Spec}(#1)}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\sheafhom}{\mathcal{H}\mathit{om}}
+\newcommand{\cat}{\mathcal C} % This is going to be the Tannakian category we are looking for
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+For a fixed scheme $S$, let $X$ be a scheme over $S$ and $G$ be a group scheme over $S$ with the product map 
+$\mu:G \times _S G \rightarrow G$, acting on $X$ via $\sigma: G \times _S X \rightarrow X$. We shall call the pair
+$(\mathcal F, \phi_\mathcal F)$ an equivariant sheaf, when $\mathcal F$ on $X$ is a quasi-coherent sheaf of 
+$\mathcal O_X$-modules, and $\phi_{\mathcal F}: \sigma ^* \mathcal F \rightarrow p_2^* \mathcal F$ is an isomorphism 
+satisfying the cocycle condition $$p_{23}^* \phi \circ (1_G \times _S \sigma)^*\phi = (m \times _S 1_X)^*\phi.$$ 
+This cocycle condition is equivalent to saying that the following diagram commutes:
+\input{hexagon}
+
+A morphism $f:(\mathcal F,\phi _\mathcal F) \rightarrow (\mathcal G, \phi_\mathcal G)$ between two equivariant sheafs
+is defined to be a morphism $f:\mathcal F \rightarrow \mathcal G$ of sheaves of $\mathcal O_X$-modules,
+such that the following diagram commutes
+\begin{center}
+  \begin{tikzcd}
+    \sigma ^* \mathcal F \arrow[r,"\phi_\mathcal F"] \arrow [d,"\sigma^* f"]   & p_2^* \mathcal F \arrow[d,"p_2^*f"]\\
+    \sigma ^* \mathcal G \arrow[r,"\phi_\mathcal G"]              & p_2^* \mathcal G
+  \end{tikzcd}
+\end{center}
+
+We see that a composition of a morphism of equivariant sheaf is well-defined, for if we have equivariant sheafs
+$(\mathcal F,\phi _\mathcal F)$, $(\mathcal G,\phi _\mathcal G)$ and $(\mathcal H,\phi _\mathcal H)$ and morphisms
+$f:(\mathcal F,\phi _\mathcal F) \rightarrow (\mathcal G, \phi_\mathcal G)$ and
+$g:(\mathcal G,\phi _\mathcal G) \rightarrow (\mathcal H, \phi_\mathcal H)$ then the composition of the morphisms 
+$g \circ f : (\mathcal F,\phi _\mathcal F) \rightarrow (\mathcal H,\phi _\mathcal H)$ is also a morphisms of
+equivariant sheafs.
+
+We see that $(\mathcal F,\phi_{\mathcal F})$ is a quasi-coherent sheaf if and only if $\mathcal F$ is an equivariant
+object in the fibered category of quasi-coherent sheafs. This means that under the setup 
+$p:\mathcal Qcoh/k \rightarrow Sch/k$ and $\mathcal F \in \mathcal Qcoh(X)$ we have that $\mathcal F$ is a 
+$G$-equivariant sheaf on $X$ if and only if for every quasi-coherent sheaf $\mathcal G$ over $T \rightarrow \spec k$,
+we have a naturalaction of $\Hom(T,G)$ on $\Hom(\mathcal G,\mathcal F)$ such that
+\begin{enumerate}
+  \item For every arrow $\phi:\mathcal G_1 \rightarrow \mathcal G_2$ in $\mathcal Qcoh/k$ mapping to a morphism of 
+    schemes $f:T_1 \rightarrow T_2$, the induced function 
+    $\phi^*: \Hom(T_2,\mathcal F) \rightarrow \mathcal (T_1,\mathcal F)$ is equivariant with respect to the 
+    homomorphism $\Hom(f,G):\Hom (T_2,G) \rightarrow \Hom (T_1,G)$.
+  \item The function $\Hom (\mathcal G,\mathcal F) \rightarrow \mathcal (T,X)$ induced by the functor $p$ is 
+    $\Hom(T,G)$ equivariant.
+\end{enumerate}
+A $G$-equivariant morphism $f:\mathcal F \rightarrow \mathcal G$ of quasi-coherent sheafs
+$\mathcal F$ and $\mathcal G$ is a morphism of sheafs, such that for each quasi-coherent quasi-coherent sheaf
+$\mathcal V$ over a $k$-scheme $Y$, the natural transformation of functors
+$\tilde f(\mathcal V): \Hom(\mathcal V,\mathcal F) \Rightarrow \Hom(\mathcal V,\mathcal G)$ induced by $f$ is a 
+a $\Hom(Y,G)$-equivariant map.
+
+\section{Equivariant Vector Bundles} 
+
+Let $k$ be a perfect field with algebraic closure $\bar k$ and let $X$ be a complete connected reduced scheme over $k$.
+Denote by $G$, the constant profinite group $Gal(\bar k / k)$ over $\bar k$. Observe that $G$ acts naturally on 
+$\bar X := X \times _k \spec {\bar k}$. Denote the natural action of $G$ on $X$ by 
+$\sigma: G \times _{\bar k} \bar X \rightarrow \bar X$. We study essentially finite vector bundles over $\bar X$ with 
+$G$-equivariant structures.
+
+\subsection{Equivariant Vector Bundles}
+\label{sec:Equivariant Vector Bundles}
+
+Let $\cat$ be the full subcategory of the category of equivariant sheafs, whose objects are of the form $(V,\phi_V)$,
+where $V$ is an essentially finite vector bundle. We shall show that $\cat$ forms a Tannakian category. 
+
+\begin{lemma}
+  Both $p_2:G \times X \rightarrow X$ and $\sigma:G \times X \rightarrow X$ are flat.
+\end{lemma}
+\begin{proof}
+  Since $G$ is a limit of finite groups which are flat, we have that the structure map $G \rightarrow \spec {\bar k}$ 
+  is flat. So we have that the base change of this map by $\bar X \rightarrow \spec {\bar k}$ is flat, so 
+  $p_2: G \times \bar X \rightarrow \bar X$ is flat.
+
+  Now we want to show that the group action $\sigma$ is flat. For any finite Galois extension $K$ of $k$, we set
+  $G_K$ to be the constant group $Gal(K/k)$ over $\spec K$ and $X_K = X \times _{\spec k} \spec K$. We see that
+  $G_K$ is finite and flat over $\spec K$. For a tower of Galois extensions $K' \supset K \supset k$, we have that
+  $$G_{K'} \rightarrow G_K \times_K \spec {K'} \xrightarrow {p_1} G_K.$$ 
+  Similarly we have a map $X_{K'} \rightarrow X_K$. We see that the limits of $G_K$ and $X_K$ over all finite Galois
+  extensions $K$ of $k$ are $G$ and $\bar X$ respectively. We similarly see that the limit of $G_K \times_K X_K$ 
+  over all finite Galois $K\supset k$ is $G \times_{\bar k} \bar X$. Now we have the natural action 
+  $\sigma_K: G_K \times_K X_K \rightarrow X_K$ of $G_K$ on $X_K$. This action is flat and we have that this is a map
+  of inverse systems whose limit is the map $\sigma: G \times \bar X \rightarrow \bar X$, so $\sigma$ is flat.
+\end{proof}
+\begin{lemma}
+  For equivariant vector bundles $(V_i,\phi_{V_i})$ and $(W_i,\phi_{W_i})$ for $i=1,2$ and maps
+  $f:(V_1,\phi_{V_1}) \rightarrow (V_2,\phi_{V_2})$ and $g:(W_1,\phi_{W_1}) \rightarrow (W_2,\phi_{W_2})$, 
+  $\Hom (V_1,\phi_{V_1}){(W_1,\phi_{W_1})}$ forms an abelian group and $f$ and $g$ induce a homomorphism of groups.
+\end{lemma}
+\begin{proof}
+  Let $h_1$ and $h_2$ be two morphism from $\Hom ((V_1,\phi_{V_1}),(W_1,\phi_{W_1}))$. Then $h_1 + h_2$ also
+  defines an equivariant morphism from $(V_1,\phi_{V_1})$ to $(W_1,\phi_{W_1})$ as 
+  \begin{align*}
+    (p_2^*(h_1 + h_2)) \circ \phi_{V_1} &= p_2^*(h_1) \circ \phi_{V_1} + p_2^*(h_2) \circ \phi_{V_1} \\
+                                        &= \phi_{V_2} \circ \sigma^* (h_1) + \phi_{V_2} \circ \sigma^* (h_2) \\
+                                        &= \phi_{V_2} \circ \sigma^* (h_1 + h_2).
+  \end{align*}
+  So we have that $\Hom ((V_1,\phi_{V_1}),(V_2,\phi_{V_2}))$ is an abelian group.
+  Now we want to show that $f$ induces a homomorphism 
+  $$\tilde f:\Hom ((V_2,\phi_{V_2}),(W_1,\phi_{W_1}))\rightarrow \Hom ((V_1,\phi_{V_1}),(W_1,\phi_{W_1})).$$
+  For $h \in \Hom ((V_2,\phi_{V_2}),(W_1,\phi_{W_1}))$, we have that $\tilde f (h) = h \circ f$ so we have for 
+  $h_1,h_2 \in \Hom ((V_2,\phi_{V_2}),(W_1,\phi_{W_1}))$, 
+\begin{align*}
+  \tilde f (h_1 + h_2) &= (h_1 + h_2) \circ f \\
+                       &= h_1 \circ f + h_2 \circ f \\
+                       &= \tilde f (h_1) + \tilde f (h_2)
+\end{align*}
+so $\tilde f$ is a homomorphism. 
+
+Similarly the map $\tilde g$ induced by $g$ on the set of morphisms is also a homomorphism of abelian groups.
+
+\end{proof}
+
+\begin{lemma}
+  For two equivariant vector bundles $(V_1,\phi_{V_1})$ and $(V_2,\phi_{V_2})$ any equivariant morphism
+  $f:(V_1,\phi_{V_1})\rightarrow (V_2,\phi_{V_2})$ admits a kernel and a cokernel.
+\end{lemma}
+\begin{proof}
+  From the hypothesis, we have a map $f:V_1 \rightarrow V_2$ of essentially finite vector bundles. Since the 
+  category of essentially finite vector bundles is Abelian, we have that $f$ has a kernel $j_K:K\rightarrow V_1$ 
+  and a cokernel $q_C:V_2 \rightarrow C$. Since $\sigma$ and $p_2$ are exact, we have the following diagram which 
+  commutes
+  \begin{center}
+    \begin{tikzcd}
+      0 \arrow[r] \arrow[d] & \sigma^* K \arrow[r,"\sigma^* j_K"] \arrow[d,dotted,"\phi_K"] & \sigma^* V_1 \arrow[r,"\sigma^* f"] \arrow[d,"\phi_{V_1}"] & \sigma^* V_2 \arrow[r,"\sigma^* q_C"] \arrow[d,"\phi_{V_2}"] & \sigma^* C \arrow[r] \arrow[d,dotted,"\phi_C"] & 0 \arrow[d]\\
+      0 \arrow [r] & p_2^* K \arrow[r,"p_2^* j_K"] & p_2^* V_1 \arrow[r,"p_2^* f"] & p_2^* V_2 \arrow[r,"p_2^* q_C"] & p_2^* C \arrow[r] & 0
+    \end{tikzcd}
+  \end{center}
+  where $\phi_k$ is induced by the universal property of $p_2^* K$ being the kernel of $p_2^* f$, and $\phi_C$ is 
+  induced by the universal property of $\sigma_K ^* C$ being the cokernel of $\sigma ^* f$. 
+  By extending the rows on the left and right of the sequence by zeros, and using five lemma on 
+  the five columns to the left and the five columns to the right,
+  we see that both $\phi_K$ and $\phi_C$ are isomorphisms.
+
+  Now we verify that both $\phi_K$ and $\phi_C$ indeed satisfy the hexagon. We have 
+  \begin{align*}
+    (1_G\times \sigma)^*j_K\circ p_{23}^* \phi_{K} \circ (1_G \times _S \sigma)^*\phi_{K} =&\\
+    p_{23}^* \phi_{V_1} \circ (1_G \times _S \sigma)^*\phi_{V_1} \circ (1_G\times \sigma)^*j_K&= \\
+    (m \times _S 1_X)^*\phi_V{_1}\circ (1_G\times \sigma)^*j_K&= \\
+    (1_G\times \sigma)^*j_K\circ (m \times _S 1_X)^*\phi_V{_1}.
+  \end{align*}
+  Since $(1_G\times \sigma)^*j_K$ is monic, we have that the cocycle condition for $\phi_K$ is satisfied. Thus we have
+  That $(K,\phi_K)$ is an equivariant vector bundle. Similarly $(C,\phi_C)$ is an equivariant vector bundle.
+\end{proof}
+
+So we see that $\cat$ is an Abelian category. Now we shall show that we have a tensor product in $\cat$, which makes
+it a Tannakian category
+
+Define $\otimes: \cat \times \cat \rightarrow \cat$ by 
+$(V,\phi_V) \otimes (W,\phi_W) = (V\otimes W,\phi_V \otimes \phi_W)$. To check that the functor is well defined,
+we have to check that $\phi_V \otimes \phi_W$ satisfies the cocycle condition:
+\begin{align*}
+  p_{23}^* (\phi_V \otimes \phi_W) \circ (1_G \times_S \sigma) ^* (\phi_V \otimes \phi_W) \\
+  (p_{23}^* \phi_V \circ p_{23}^* \phi_W) \otimes ((1_G \times_S \sigma) ^* \phi_V \circ (1_G \times_S \sigma) ^* \phi_W) \\
+  (p_{23}^* \phi_V \circ (1_G \times_S \sigma) ^* \phi_V) \otimes (p_{23}^* \phi_W \circ (1_G \times_S \sigma) ^* \phi_W) \\
+  = (m \times 1_X)^* \phi_V \otimes (m \times 1_X)^* \phi_W\\
+  = (m \times 1_X)^* \phi_V \otimes \phi_W.
+\end{align*}
+Thus $(V,\phi_V) \otimes (W,\phi_W) = (V\otimes W,\phi_V \otimes \phi_W)$ is a equivariant vector bundle.
+
+Now we shall show that the sheaf hom $\Hom(V_1,V_2)$ can naturally be given a $G$-equivariant structure.
+
+\begin{lemma}
+  If $(V_1,\phi_{V_1})$ and $(V_2,\phi_{V_2})$ are $G$-equivariant sheafs, then the sheaf $\sheafhom (V_1,V_2)$ has a 
+  natural $G$-equivariant structure.
+\end{lemma}
+
+\begin{proof}
+  On $\mathcal Qcoh/k$, we take the functor $F:\mathcal Qcoh \rightarrow Sets$ defined, for a sheaf
+  $\mathcal V$ over a scheme $Y$, by setting $F(\mathcal V)$ to be the set of all pairs $(f,\tilde f)$ where $f$ 
+  is a morphism of $k$-schemes $f:Y\rightarrow X$, and $\tilde f$ is a homomorphism of $\Gamma(Y,\mathcal O_Y)$-modules
+  $\Gamma(Y,F)$ to $\Hom(\Gamma(Y,V_1),\Gamma(Y,V_2))$ and for a morphism of sheaves 
+  $\tilde g:\mathcal F \rightarrow \mathcal G$ over the map $g:Y_1 \rightarrow Y_2$ of $k$-schemes, defining the map
+  $F(\tilde g):F(\mathcal G) \rightarrow F(\mathcal F)$ by sending $(f,\tilde f)$ to 
+  $(f\circ g,\tilde f \circ \tilde g)$. We see that $F$ defines a presheaf of sets on 
+  $\mathcal Qcoh/k$, whose sheafification under the big Zariski topology is isomorphic to the sheaf
+  $\Hom(-,\sheafhom (V_1,V_2))$. Now we have an action of $G$ on the preasheaf $F$, given by taking a 
+  $g\in \Hom(Y,G)$ and $(f,\tilde f) \in F(Y)$, and defining 
+  $$g\cdot (f,\tilde f) = ((g\cdot f), (g\cdot \tilde f\cdot g^{-1})).$$
+  Thus $G$ has an action on the sheaf $\Hom(-,\sheafhom(V_1,V_2))$, giving us a $G$-equivariant structure on 
+  $\sheafhom(V_1,V_2)$.
+\end{proof}
+
+\begin{lemma}
+  Let $\mathcal E,\mathcal F$ and $\mathcal G$ be $G$-equivariant sheafs on $X$. Then we have
+  $$\Hom_\cat(\mathcal E \otimes \mathcal F, \mathcal G) \cong\Hom_\cat(\mathcal E,\sheafhom(\mathcal F,\mathcal G)).$$
+\end{lemma}
+\begin{proof}
+  From Yoneda lemma, we have that the set $\Hom_\cat(\mathcal E \otimes \mathcal F,\mathcal G)$ is the same as 
+  the set of all $G$-equivariant natural transformations 
+  $F:\Hom(-,\mathcal E \otimes \mathcal F) \Rightarrow \Hom(-,\mathcal G)$ of
+  the set valued functors $\Hom(-,\mathcal E \otimes \mathcal F)$ to $\Hom(-,\mathcal G)$ on $\mathcal Qcoh/k$.
+  Similarly, $\Hom_\cat(\mathcal E ,\sheafhom(\mathcal F,\mathcal G))$ is the same as 
+  the set of all $G$-equivariant natural transformations 
+  $F:\Hom(-,\mathcal E) \Rightarrow \Hom(-,\sheafhom(\mathcal F,\mathcal G))$ of
+  the set valued functors $\Hom(-,\mathcal E)$ to $\Hom(-,\sheafhom(\mathcal F,\mathcal G))$ on $\mathcal Qcoh/k$.
+
+  Now we define preasheaf of sets $F_1:\mathcal Qcoh/k \rightarrow Sets$ by assigning to each quasi-coherent sheaf
+  $\mathcal V$ over the $k$-scheme $Y$, the set of $(f,\tilde f)$ such that $f:Y \rightarrow X$ is a morphism of 
+  $k$-schemes and $\tilde f$ is a $\Gamma(Y,\mathcal O_Y)$-module morphism of $\Gamma(Y,\mathcal V)$ to 
+  $\Gamma(Y,f^* (\mathcal E \otimes \mathcal F))$. For a morphism $\tilde g:\mathcal V_1 \rightarrow \mathcal V_2$ 
+  over the morphism of schemes $g:Y_1 \rightarrow Y_2$, we set $F_1(g)$ to be the map which takes the pairs
+  $(f,\tilde f)$ and maps it to $(f \circ g,\tilde f \circ \tilde g )$.
+
+  We define preasheaf of sets $F_2:\mathcal Qcoh/k \rightarrow Sets$ by assigning to each quasi-coherent sheaf
+  $\mathcal V$ over the $k$-scheme $Y$, the set of $(f,\tilde f)$ such that $f:Y \rightarrow X$ is a morphism of 
+  $k$-schemes and $\tilde f$ is a $\Gamma(Y,\mathcal O_Y)$-module morphism of $\Gamma(Y,\mathcal V)$ to 
+  $\Hom(\Gamma(Y,f^*(\mathcal F)),\Gamma(Y,f^*\mathcal G))$.
+
+  Now we have that $G$-equivariant natural transformations of $F_1$ to $\Hom(-,\mathcal G)$ are isomorphic to the
+  $G$-equivariant natural transformations of $\Hom(-,\mathcal E)$ to $F_2$. Upon sheafification of both $F_1$ and
+  $F_2$ under the big Zariski topology, we get the required isomorphism.
+\end{proof}
+
+Let $\bar x: \spec {\bar k} \rightarrow X$ be a geometric point. We see that the fiber functor of $\cat$ associated to 
+$\bar x$ is an exact $\bar k$-linear faithful tensor functor and $\operatorname{End}(\mathcal O_{\bar X}) = \bar k$. 
+Thus $\cat$ along with $\bar x$ forms a Tannakian category with dual $\pi(X,\bar x)$. 
+
+\subsection{Results on $\pi(X,\bar x)$}
+
+Now we compare Nori's fundamental group with the aforementioned fundamental group.
+\begin{lemma}
+  Let $\bar f:\bar X\rightarrow \bar Y$ be a morphism of $\bar k$-varieties, then there exists a 
+  finite field extension $K$ of $k$, varieties $X$ and $Y$ over $K$, and a morphism $f:X \rightarrow Y$ of 
+  $K$-varieties, such that base change of $f$ to $\bar k$ is isomorphic to $\bar f$.
+\end{lemma}
+\begin{proof}
+  Let $U_i = \spec {A_i}$ be an affine open cover of $\bar Y$ and let $V_{ij} = \spec {B_{ij}}$ be an affine open cover
+  of $\bar f ^{-1} (U_i)$. Now each $A_i$, $A_i \times _{\bar Y} A_j$, $B_{ij}$ and $B_{ij} \times _{\bar X} B_{kl}$ 
+  is a finite type $\bar k$-algebra and the maps between them are polynomial maps so we can take the field extension 
+  $K$ of $k$, which we get by adjoining coefficients of polynomials defining the affine open sets and the coefficients
+  of the polynomial map $\bar f$, restriced to $\bar f : \spec B_{ij} \rightarrow {A_i}$. Since both $\bar X$ and 
+  $\bar Y$ are quasi-compact, we may take finitely many $U_i$ and $V_{ij}$, so $K$ is a finite extension of $k$. This
+  gives us patching data to construct a map $f:X \rightarrow Y$ of varieties over $K$, and by construction, we have 
+  the the pullback of this map to $\bar k$ is $\bar f$. 
+\end{proof}
+\begin{theorem}
+  Let $X$ be a complete connected reduced scheme over $k$. Nori's fundamental group $\pi^N(\bar X, \bar x)$ is a
+  closed subgroup of $\pi(X,\bar x)$.
+\end{theorem}
+
+\begin{proof}
+  To show the result, we recall that a tensor functor $F:T_1 \rightarrow T_2$ between two Tannakian categories $T_1$ 
+  and $T_2$ induces a group-scheme homomorphism $\pi(F):\pi(T_2)\rightarrow \pi(T_1)$. This homomorphism is a closed 
+  immersion if and only if every object of $T_2$ is isomorphic to a subquotient of an object of the form of 
+  $F(t)$, where $t$ is an object of $T_1$.
+
+  Now we have a tensor functor $\omega:\cat \rightarrow EF$, given by $\omega((V,\phi_V)\xrightarrow f(W,\phi_W)) = 
+  V\xrightarrow f W$, where $EF$ is the category of essentially finite vector bundles on $\bar X$. We shall show that 
+  every essentially finite vector bundle $V$ is a subquotient of a vector bundle $W$, where $W$ admits a 
+  $G$-equivariant structure. So we fix an essentially finite vector bundle $\bar V$ on $\bar X$. We have the scheme 
+  $\bar Y =\spec {Symm (\bar V)}$ and a map $\pi :\bar  Y \rightarrow \bar X$, where $Symm(\bar V)$ is the symmetric 
+  algebra of $\bar V$. 
+
+  Now from the previous lemma, we have a finite extension $K$ of $k$, a variety $V$ over $K$, and a map 
+  $\tilde \pi : V \rightarrow X \times _k \spec K$ such that base change of  $\tilde \pi$ to $\bar k$ is isomorphic
+  to $\pi$. So $\bar V$ is a pullback of the vector bundle $V$ over $X \times_k \spec K$.
+
+  This give us a vector bundle $p _{1*}V$ on $X$, where $p_1$ is the projection of $X \times _k \spec K$ to $X$. 
+  From the counit functor we get the map $p_1^*p _{1*}V$ surjects onto $V$ (since $p_1$ is an affine map). 
+  Thus the pullback of the vector bundle $p_{1*}V$ on $X$ along $\spec {\bar k} \rightarrow \spec k$ give us a vector
+  bundle $W$ on $\bar X$, such that $V$ is a quotient of $W$. Since $W$ is the pullback of a vector bundle along a
+  $G$-torsor, we have that $W$ is a $G$-equivariant bundle. So we have that the map 
+  $\pi(\omega):\pi^N(\bar X, \bar x) \rightarrow \pi(X,\bar x)$ is a closed immersion.
+\end{proof}
+
+Let $\mathcal Rep$ be the category of finite dimensional $\bar k$-representaions of the absolute Galois group of
+$k$. Then we have a functor $F:\mathcal Rep \rightarrow \cat$, which is defined by taking a morphism 
+$f:V \rightarrow W$ in $\mathcal Rep$ and setting $F(f)=Id_{\bar X} \times f$. We see that this is a $k$-linear tensor
+functor.
+
+\begin{theorem}
+  The homomorphism $\pi(F):\pi(X,\bar x) \rightarrow G$ defined by the functor $F$ is a faithfully flat morphism of 
+  schemes. 
+\end{theorem}
+
+\begin{proof}
+  We know that $\pi(F)$ is faithfully flat if and only if $F$ is fully faithful and every object $V$ of 
+  $\mathcal Rep$, the subobjects of $F(V)$ are isomorphic to the image of a subobject of $V$.
+
+  So we fix a finite dimensional $\bar k$-representaion $V$ of $G$, and we get an equivariant $G$-bundle 
+  $\bar X \times V$ on $\bar X$. This corresponds to the sheaf $\mathcal F$, which is isomorphic to 
+  $\oplus \mathcal O_{\bar X}$ with a $G$-equivariant structure on $\bar X$. Now let $\mathcal V$ be a sub object of 
+  $\mathcal F$ in the category $\cat$. So we want to show that $\mathcal V$ is also of the form 
+  $\oplus \mathcal O_{\bar X}$. Since $\mathcal V$ is an essentially finite vector bundle, there exists a 
+  finite group-scheme $H$ over $\bar k$ and an $H$-torsor $f:Y \rightarrow \bar X$, such that 
+  $f^*(\mathcal V) \cong \oplus \mathcal O_Y$. Now $f^*(\mathcal F) \cong \oplus \mathcal O_Y$ with the trivial
+  $H$-equivariant structure, so $f^*(\mathcal V)$ too has a trivial $H$-equivariant structure, so 
+  $\mathcal V \cong f_*f^*(\mathcal V) ^H \cong \oplus \mathcal O_{\bar X}$
+\end{proof}
+
+\begin{theorem}
+  From the two homomorphisms above, we get a short exact sequence
+  $$0 \rightarrow \pi ^ N(\bar X,\bar x) \rightarrow \pi(X,\bar x) \rightarrow G \rightarrow 0.$$
+\end{theorem}
+
+\begin{proof}
+  We see that $\omega \circ F$ take a representaion $V$ of $G$ and gives a trivial vector bundle on $\bar X$ of the
+  same rank, so we have the above sequence is a complex. Now objects of $\cat$ which give a trivial vector bundle 
+  under $\omega$ are precisely of the form $\oplus \mathcal O_{\bar X}$ with a $G$-equivariant structure which is 
+  isomorphic to an object in the image of $F$.
+\end{proof}
+
+\end{document}
